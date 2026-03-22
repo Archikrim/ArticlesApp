@@ -12,13 +12,22 @@ public class ArticlesController(IHttpClientFactory factory) : Controller
     private readonly HttpClient _client = factory.CreateClient("api");
 
     /// <summary>
-    /// Retrieves a list of articles and displays them in the view.
+    /// Displays a paginated list of articles retrieved from the API. The page parameter determines which set of articles to display,
     /// </summary>
-    /// <returns>An asynchronous operation that returns an IActionResult containing the articles view.</returns>
-    public async Task<IActionResult> Index()
+    /// <param name="page"></param>
+    /// <returns></returns>
+    public async Task<IActionResult> Index(int page = 1)
     {
-        var articles = await _client.GetFromJsonAsync<List<Article>>("api/articles");
-        return View(articles);
+        int pageSize = 5;
+
+        var result = await _client.GetFromJsonAsync<PagedResult<Article>>(
+            $"api/articles/paged?page={page}&pageSize={pageSize}");
+
+        ViewBag.Page = page;
+        ViewBag.PageSize = pageSize;
+        ViewBag.TotalCount = result?.TotalCount ?? 0;
+
+        return View(result?.Items ?? []);
     }
 
     /// <summary>

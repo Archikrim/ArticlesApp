@@ -66,4 +66,23 @@ public class ArticleService(AppDbContext context) : IArticleService
             await _context.SaveChangesAsync();
         }
     }
+
+    /// <inheritdoc/>
+    public async Task<PagedResult<Article>> GetPagedAsync(int page, int pageSize)
+    {
+        var query = _context.Articles.AsQueryable();
+
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return new PagedResult<Article>
+        {
+            Items = items,
+            TotalCount = totalCount
+        };
+    }
 }

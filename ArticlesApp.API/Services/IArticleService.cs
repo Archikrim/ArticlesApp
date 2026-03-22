@@ -66,4 +66,12 @@ public interface IArticleService
     /// <param name="id">The unique identifier of the entity to delete.</param>
     /// <returns>A task that represents the asynchronous delete operation.</returns>
     Task DeleteAsync(int id);
+
+    /// <summary>
+    /// Asynchronously retrieves a paginated list of articles based on the specified page number and page size.
+    /// </summary>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    Task<PagedResult<Article>> GetPagedAsync(int page, int pageSize);
 }

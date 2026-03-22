@@ -90,4 +90,16 @@ public class ArticlesController(IArticleService service) : ControllerBase
         await _service.DeleteAsync(id);
         return NoContent();
     }
+
+    /// <summary>
+    /// Retrieves a paginated list of articles based on the specified page number and page size. This endpoint allows clients to
+    /// </summary>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    [HttpGet("paged")]
+    public async Task<IActionResult> GetPaged(int page = 1, int pageSize = 5)
+    {
+        return Ok(await _service.GetPagedAsync(page, pageSize));
+    }
 }

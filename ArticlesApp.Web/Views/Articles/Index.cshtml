@@ -25,3 +25,25 @@ else
         }
     </ul>
 }
+
+@{
+    int totalPages = (int)Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize);
+}
+
+<div style="margin-top:20px;">
+
+    @if (ViewBag.Page > 1)
+    {
+        <a asp-action="Index" asp-route-page="@(ViewBag.Page - 1)">⬅ Prev</a>
+    }
+
+    <span style="margin:0 10px;">
+        Page @ViewBag.Page of @totalPages
+    </span>
+
+    @if (ViewBag.Page < totalPages)
+    {
+        <a asp-action="Index" asp-route-page="@(ViewBag.Page + 1)">Next ➡</a>
+    }
+
+</div>
