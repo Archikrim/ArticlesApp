@@ -1,9 +1,13 @@
 ﻿@model Product
 
-<h1>@Model.Title</h1>
+<div class="bg-white p-6 rounded shadow">
 
-<img src="@Model.Image" width="200" />
+    <img src="@Model.Image" class="h-60 mx-auto object-contain" />
 
-<p>@Model.Description</p>
-<p><b>Price:</b> $@Model.Price</p>
-<p><b>Category:</b> @Model.Category</p>
+    <h1 class="text-2xl font-bold mt-4">@Model.Title</h1>
+
+    <p class="text-green-600 text-xl">$@Model.Price</p>
+
+    <p class="mt-4">@Model.Description</p>
+
+</div>

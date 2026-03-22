@@ -1,14 +1,23 @@
 ﻿@model List<Product>
 
-<h1>Products</h1>
+<h1 class="text-2xl font-bold mb-4">Products</h1>
 
-<ul>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
     @foreach (var p in Model)
     {
-        <li>
-            <a asp-action="Details" asp-route-id="@p.Id">
-                @p.Title - $@p.Price
+        <div class="bg-white p-4 rounded shadow">
+
+            <img src="@p.Image" class="h-40 mx-auto object-contain" />
+
+            <h2 class="font-bold mt-3">@p.Title</h2>
+
+            <p class="text-green-600 font-bold">$@p.Price</p>
+
+            <a asp-action="Details" asp-route-id="@p.Id"
+               class="inline-block mt-3 text-blue-600">
+                View →
             </a>
-        </li>
+
+        </div>
     }
-</ul>
+</div>
