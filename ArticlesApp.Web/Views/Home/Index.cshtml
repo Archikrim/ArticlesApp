@@ -4,5 +4,18 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <p>Select what you want to view:</p>
+
+    <div style="margin-top:20px;">
+        <a asp-controller="Articles" asp-action="Index"
+           style="margin-right:20px; font-size:20px;">
+            📄 Articles
+        </a>
+
+        <a asp-controller="Products" asp-action="Index"
+           style="font-size:20px;">
+            🛒 Products
+        </a>
+    </div>
 </div>
