@@ -1,21 +1,32 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+<div class="py-12 text-center">
+    <h1 class="text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+        Welcome to <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">ArticlesApp</span>
+    </h1>
+    <p class="text-gray-500 text-lg mb-10">Select a section to start managing your content</p>
 
-    <p>Select what you want to view:</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
 
-    <div style="margin-top:20px;">
         <a asp-controller="Articles" asp-action="Index"
-           style="margin-right:20px; font-size:20px;">
-            📄 Articles
+           class="group p-8 bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-xl transition-all duration-300 text-center">
+            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                <i class="bi bi-file-earmark-text text-3xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800">Articles</h3>
+            <p class="text-gray-500 mt-2 text-sm">Manage your blog posts and content entries</p>
         </a>
 
         <a asp-controller="Products" asp-action="Index"
-           style="font-size:20px;">
-            🛒 Products
+           class="group p-8 bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-green-300 hover:shadow-xl transition-all duration-300 text-center">
+            <div class="w-16 h-16 bg-green-50 text-green-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                <i class="bi bi-cart text-3xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800">Products</h3>
+            <p class="text-gray-500 mt-2 text-sm">Browse and edit the catalog of items</p>
         </a>
+
     </div>
 </div>

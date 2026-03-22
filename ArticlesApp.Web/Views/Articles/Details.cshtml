@@ -1,16 +1,34 @@
 ﻿@model Article
+@{
+    ViewData["Title"] = Model?.Title;
+}
 
 @if (Model == null)
 {
-    <p>Article not found</p>
+    <div class="text-center py-10">
+        <h1 class="text-2xl font-bold text-gray-800">Article not found</h1>
+        <a asp-action="Index" class="text-blue-600 underline">Back to list</a>
+    </div>
 }
 else
 {
-    <h1 class="text-3xl font-bold">@Model.Title</h1>
+    <article class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
+        <a asp-action="Index" class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-blue-600 mb-6 transition-colors">
+            <i class="bi bi-arrow-left"></i> Back to articles
+        </a>
 
-    <p class="mt-4">@Model.Content</p>
+        <div class="mb-6">
+            <span class="text-blue-600 font-bold tracking-widest text-xs uppercase">@Model.Tag</span>
+            <h1 class="text-4xl md:text-5xl font-black text-gray-900 mt-2 leading-tight">@Model.Title</h1>
+        </div>
 
-    <div class="mt-4 text-gray-500">
-        Tag: @Model.Tag
-    </div>
+        <div class="prose prose-blue max-w-none text-gray-700 leading-relaxed text-lg">
+            @Model.Content
+        </div>
+
+        <div class="mt-12 pt-8 border-t border-gray-100 flex items-center gap-4 text-sm text-gray-400 font-medium italic">
+            <i class="bi bi-info-circle"></i>
+            You are reading an article from the @Model.Tag category.
+        </div>
+    </article>
 }

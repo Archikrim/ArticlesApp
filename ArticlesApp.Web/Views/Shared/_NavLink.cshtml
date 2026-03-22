@@ -1,0 +1,7 @@
+﻿@model (string Controller, string Action, string Text, string Icon, bool IsActive)
+
+<a asp-controller="@Model.Controller"
+   asp-action="@Model.Action"
+   class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors @(Model.IsActive ? "text-blue-600 font-bold" : "text-gray-600 hover:bg-gray-100 hover:text-blue-500")">
+    <i class="bi @Model.Icon"></i> @Model.Text
+</a>

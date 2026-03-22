@@ -1,13 +1,40 @@
 ﻿@model Product
+@{
+    ViewData["Title"] = Model?.Title;
+}
 
-<div class="bg-white p-6 rounded shadow">
+@if (Model == null)
+{
+    <div class="text-center py-10">
+        <h1 class="text-2xl font-bold text-gray-800">Product not found</h1>
+        <a asp-action="Index" class="text-blue-600 underline">Back to list</a>
+    </div>
+}
+else
+{
+    <div class="max-w-5xl mx-auto bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="flex flex-col md:flex-row">
+            <div class="md:w-1/2 bg-gray-50 p-12 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-100">
+                <img src="@Model.Image" class="max-h-96 object-contain drop-shadow-2xl" />
+            </div>
 
-    <img src="@Model.Image" class="h-60 mx-auto object-contain" />
+            <div class="md:w-1/2 p-8 md:p-12">
+                <a asp-action="Index" class="text-blue-600 font-semibold text-sm flex items-center gap-2 mb-6">
+                    <i class="bi bi-arrow-left"></i> Back to catalog
+                </a>
 
-    <h1 class="text-2xl font-bold mt-4">@Model.Title</h1>
+                <h1 class="text-3xl font-black text-gray-900 mb-2 leading-tight">@Model.Title</h1>
+                <p class="text-3xl font-bold text-green-600 mb-6">$@Model.Price</p>
 
-    <p class="text-green-600 text-xl">$@Model.Price</p>
+                <div class="space-y-4 text-gray-600 leading-relaxed mb-8">
+                    <h4 class="font-bold text-gray-800 uppercase text-xs tracking-widest">Description</h4>
+                    <p>@Model.Description</p>
+                </div>
 
-    <p class="mt-4">@Model.Description</p>
-
-</div>
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-2xl flex items-center justify-center gap-3 transition-all transform active:scale-95 shadow-lg shadow-blue-100">
+                    <i class="bi bi-cart-plus-fill text-xl"></i> Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+}

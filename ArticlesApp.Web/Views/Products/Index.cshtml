@@ -1,23 +1,26 @@
 ﻿@model List<Product>
+@{
+    ViewData["Title"] = "Products";
+}
 
-<h1 class="text-2xl font-bold mb-4">Products</h1>
+<h1 class="text-3xl font-black text-gray-900 mb-8">Our Products</h1>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
     @foreach (var p in Model)
     {
-        <div class="bg-white p-4 rounded shadow">
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col group">
+            <div class="relative bg-gray-50 rounded-xl p-6 mb-4 overflow-hidden">
+                <img src="@p.Image" class="h-48 w-full object-contain group-hover:scale-110 transition-transform duration-500" />
+            </div>
 
-            <img src="@p.Image" class="h-40 mx-auto object-contain" />
-
-            <h2 class="font-bold mt-3">@p.Title</h2>
-
-            <p class="text-green-600 font-bold">$@p.Price</p>
-
-            <a asp-action="Details" asp-route-id="@p.Id"
-               class="inline-block mt-3 text-blue-600">
-                View →
-            </a>
-
+            <h2 class="font-bold text-gray-800 text-lg line-clamp-1 mb-1">@p.Title</h2>
+            <div class="flex items-center justify-between mt-auto pt-4">
+                <p class="text-2xl font-black text-green-600">$@p.Price</p>
+                <a asp-action="Details" asp-route-id="@p.Id"
+                   class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition-all">
+                    <i class="bi bi-eye-fill"></i>
+                </a>
+            </div>
         </div>
     }
 </div>
