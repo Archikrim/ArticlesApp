@@ -8,6 +8,10 @@ namespace ArticlesApp.Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddHttpClient("api", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7252/");
+            });
 
             var app = builder.Build();
 
@@ -27,7 +31,7 @@ namespace ArticlesApp.Web
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=Articles}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
             app.Run();

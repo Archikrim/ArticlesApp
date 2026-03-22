@@ -1,0 +1,27 @@
+﻿@model List<Article>
+
+<h1>Articles</h1>
+
+<form method="get" asp-action="Search">
+    <input type="text" name="query" placeholder="Search..." />
+    <button type="submit">Search</button>
+</form>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No articles found</p>
+}
+else
+{
+    <ul>
+        @foreach (var article in Model)
+        {
+            <li>
+                <a asp-action="Details" asp-route-id="@article.Id">
+                    @article.Title
+                </a>
+                (Tag: <a asp-action="ByTag" asp-route-tag="@article.Tag">@article.Tag</a>)
+            </li>
+        }
+    </ul>
+}

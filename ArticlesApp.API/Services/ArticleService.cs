@@ -31,9 +31,14 @@ public class ArticleService(AppDbContext context) : IArticleService
 
     /// <inheritdoc/>
     public async Task<List<Article>> SearchAsync(string title)
-        => await _context.Articles
+    {
+        if (string.IsNullOrWhiteSpace(title))
+            return await _context.Articles.ToListAsync();
+
+        return await _context.Articles
             .Where(a => a.Title.Contains(title))
             .ToListAsync();
+    }
 
     /// <inheritdoc/>
     public async Task<Article> CreateAsync(Article article)

@@ -1,0 +1,16 @@
+﻿@model Article
+
+@if (Model == null)
+{
+    <p>Article not found</p>
+}
+else
+{
+    <h1>@Model.Title</h1>
+
+    <p>@Model.Content</p>
+
+    <p><b>Tag:</b> @Model.Tag</p>
+    <p><b>Created:</b> @Model.CreatedAt</p>
+    <p><b>Status:</b> @(Model.IsPublished ? "Published" : "Draft")</p>
+}
