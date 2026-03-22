@@ -1,12 +1,11 @@
-﻿namespace ArticlesApp.API.Models;
+﻿namespace ArticlesApp.API.DTOs;
 
 /// <summary>
-/// Represents a product with its details such as title, price, description, category, and image URL.
+/// Represents a product in the Fake Store API data transfer object format.
 /// </summary>
-public class Product
+public class FakeStoreProductDto
 {
     public int Id { get; set; }
-    public int ExternalId { get; set; }
     public string Title { get; set; } = null!;
     public decimal Price { get; set; }
     public string Description { get; set; } = null!;

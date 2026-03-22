@@ -22,6 +22,7 @@ namespace ArticlesApp.API
                      options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddScoped<IArticleService, ArticleService>();
+            builder.Services.AddHttpClient<IProductService, ProductService>();
 
             var app = builder.Build();
 
