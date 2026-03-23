@@ -25,9 +25,16 @@ public class ArticleService(AppDbContext context) : IArticleService
 
     /// <inheritdoc/>
     public async Task<List<Article>> GetByTagAsync(string tag)
-        => await _context.Articles
-            .Where(a => a.Tag == tag)
+    {
+        if (string.IsNullOrWhiteSpace(tag))
+            return await _context.Articles.ToListAsync();
+
+        tag = tag.ToLower();
+
+        return await _context.Articles
+            .Where(a => a.Tag.ToLower().Contains(tag))
             .ToListAsync();
+    }
 
     /// <inheritdoc/>
     public async Task<List<Article>> SearchAsync(string title)
@@ -70,9 +77,14 @@ public class ArticleService(AppDbContext context) : IArticleService
     /// <inheritdoc/>
     public async Task<PagedResult<Article>> GetPagedAsync(int page, int pageSize)
     {
-        var query = _context.Articles.AsQueryable();
+        if (page < 1) page = 1;
 
+        var query = _context.Articles.AsQueryable();
         var totalCount = await query.CountAsync();
+        var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+        if (page > totalPages)
+            page = totalPages == 0 ? 1 : totalPages;
 
         var items = await query
             .Skip((page - 1) * pageSize)

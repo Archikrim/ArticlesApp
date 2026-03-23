@@ -1,5 +1,6 @@
 ﻿using ArticlesApp.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ArticlesApp.Web.Controllers;
 
@@ -18,14 +19,13 @@ public class ArticlesController(IHttpClientFactory factory) : Controller
     /// <returns></returns>
     public async Task<IActionResult> Index(int page = 1)
     {
-        int pageSize = 5;
+        int pageSize = 2;
 
         var result = await _client.GetFromJsonAsync<PagedResult<Article>>(
             $"api/articles/paged?page={page}&pageSize={pageSize}");
 
         ViewBag.Page = page;
-        ViewBag.PageSize = pageSize;
-        ViewBag.TotalCount = result?.TotalCount ?? 0;
+        ViewBag.TotalPages = (int)Math.Ceiling((double)(result?.TotalCount ?? 0) / pageSize);
 
         return View(result?.Items ?? []);
     }
@@ -48,7 +48,11 @@ public class ArticlesController(IHttpClientFactory factory) : Controller
     /// <returns>An asynchronous operation that returns an IActionResult containing the filtered articles.</returns>
     public async Task<IActionResult> ByTag(string tag)
     {
-        var articles = await _client.GetFromJsonAsync<List<Article>>($"api/articles/tag/{tag}");
+        var encodedTag = Uri.EscapeDataString(tag);
+
+        var articles = await _client.GetFromJsonAsync<List<Article>>(
+            $"api/articles/tag/{encodedTag}");
+        ViewBag.Page = 1;
         return View("Index", articles);
     }
 
