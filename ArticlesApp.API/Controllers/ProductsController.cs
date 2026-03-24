@@ -43,4 +43,16 @@ public class ProductsController(IProductService service) : ControllerBase
         var product = await _service.GetByIdAsync(id);
         return product == null ? NotFound() : Ok(product);
     }
+
+    /// <summary>
+    /// Retrieves a paginated list of products based on the specified page number and page size. The default page number is 1 and the default page size is 5.
+    /// </summary>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    [HttpGet("paged")]
+    public async Task<IActionResult> GetPaged(int page = 1, int pageSize = 5)
+    {
+        return Ok(await _service.GetPagedAsync(page, pageSize));
+    }
 }

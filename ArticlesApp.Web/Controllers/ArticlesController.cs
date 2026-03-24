@@ -13,14 +13,13 @@ public class ArticlesController(IHttpClientFactory factory) : Controller
     private readonly HttpClient _client = factory.CreateClient("api");
 
     /// <summary>
-    /// Displays a paginated list of articles retrieved from the API. The page parameter determines which set of articles to display,
+    /// Displays a paginated list of articles retrieved from the API. The page number and page size can be specified as query parameters.
     /// </summary>
     /// <param name="page"></param>
+    /// <param name="pageSize"></param>
     /// <returns></returns>
-    public async Task<IActionResult> Index(int page = 1)
+    public async Task<IActionResult> Index(int page = 1, int pageSize = 2)
     {
-        int pageSize = 2;
-
         var result = await _client.GetFromJsonAsync<PagedResult<Article>>(
             $"api/articles/paged?page={page}&pageSize={pageSize}");
 
@@ -48,6 +47,11 @@ public class ArticlesController(IHttpClientFactory factory) : Controller
     /// <returns>An asynchronous operation that returns an IActionResult containing the filtered articles.</returns>
     public async Task<IActionResult> ByTag(string tag)
     {
+        if (string.IsNullOrWhiteSpace(tag))
+        {
+            return View("Index", new List<Article>());
+        }
+
         var encodedTag = Uri.EscapeDataString(tag);
 
         var articles = await _client.GetFromJsonAsync<List<Article>>(

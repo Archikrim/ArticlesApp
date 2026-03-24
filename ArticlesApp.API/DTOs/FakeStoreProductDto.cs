@@ -1,14 +1,12 @@
 ﻿namespace ArticlesApp.API.DTOs;
 
 /// <summary>
-/// Represents a product in the Fake Store API data transfer object format.
+/// Represents a data transfer object for products retrieved from the Fake Store API. This DTO is used to map the product data
 /// </summary>
-public class FakeStoreProductDto
-{
-    public int Id { get; set; }
-    public string Title { get; set; } = null!;
-    public decimal Price { get; set; }
-    public string Description { get; set; } = null!;
-    public string Category { get; set; } = null!;
-    public string Image { get; set; } = null!;
-}
+/// <param name="Id"></param>
+/// <param name="Title"></param>
+/// <param name="Price"></param>
+/// <param name="Description"></param>
+/// <param name="Category"></param>
+/// <param name="Image"></param>
+public record FakeStoreProductDto(int Id, string Title, decimal Price, string? Description, string? Category, string? Image);

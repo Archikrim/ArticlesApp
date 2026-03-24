@@ -1,7 +1,7 @@
-
-using ArticlesApp.API.Data;
-using ArticlesApp.API.Services;
 using Microsoft.EntityFrameworkCore;
+using ArticlesApp.API.Data;
+using ArticlesApp.API.Models;
+using ArticlesApp.API.Services;
 
 namespace ArticlesApp.API
 {
@@ -40,7 +40,55 @@ namespace ArticlesApp.API
 
             app.MapControllers();
 
+            ApplyMigrations(app);
+
             app.Run();
+        }
+
+        private static void ApplyMigrations(WebApplication app)
+        {
+            using var scope = app.Services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            db.Database.Migrate();
+
+            if (!db.Articles.Any())
+            {
+                db.Articles.AddRange(new Article
+                {
+                    Title = "First Article",
+                    Content = "Welcome to First Article",
+                    IsPublished = true,
+                    Tag = "General",
+                },
+                new Article
+                {
+                    Title = "Second Article",
+                    Content = "Welcome to Second Article",
+                    IsPublished = true,
+                    Tag = "General"
+                },
+                new Article
+                {
+                    Title = "Third Article",
+                    Content = "Welcome to Article With Another Tag",
+                    IsPublished = true,
+                    Tag = "Another"
+                },
+                new Article
+                {
+                    Title = "No Tag Article",
+                    Content = "Welcome to No Tag Article",
+                    IsPublished = true
+                },
+                new Article 
+                {
+                    Title = "Unpublished",
+                    Content = "Blah-Blah-Blah",
+                    IsPublished = false,
+                    Tag = "Draft"
+                });
+                db.SaveChanges();
+            }
         }
     }
 }

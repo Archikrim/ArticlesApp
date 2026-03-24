@@ -17,7 +17,7 @@ public class ArticleService(AppDbContext context) : IArticleService
 
     /// <inheritdoc/>
     public async Task<List<Article>> GetAllAsync()
-        => await _context.Articles.ToListAsync();
+        => await _context.Articles.Where(a => a.IsPublished).ToListAsync();
 
     /// <inheritdoc/>
     public async Task<Article?> GetByIdAsync(int id)
@@ -27,12 +27,14 @@ public class ArticleService(AppDbContext context) : IArticleService
     public async Task<List<Article>> GetByTagAsync(string tag)
     {
         if (string.IsNullOrWhiteSpace(tag))
-            return await _context.Articles.ToListAsync();
+            return await _context.Articles
+                .Where(a => a.IsPublished)
+                .ToListAsync();
 
         tag = tag.ToLower();
 
         return await _context.Articles
-            .Where(a => a.Tag.ToLower().Contains(tag))
+            .Where(a => a.IsPublished && a.Tag != null && a.Tag.ToLower().Contains(tag))
             .ToListAsync();
     }
 
@@ -40,10 +42,12 @@ public class ArticleService(AppDbContext context) : IArticleService
     public async Task<List<Article>> SearchAsync(string title)
     {
         if (string.IsNullOrWhiteSpace(title))
-            return await _context.Articles.ToListAsync();
+            return await _context.Articles
+                .Where(a => a.IsPublished)
+                .ToListAsync();
 
         return await _context.Articles
-            .Where(a => a.Title.Contains(title))
+            .Where(a => a.IsPublished && a.Title.Contains(title))
             .ToListAsync();
     }
 
@@ -79,7 +83,7 @@ public class ArticleService(AppDbContext context) : IArticleService
     {
         if (page < 1) page = 1;
 
-        var query = _context.Articles.AsQueryable();
+        var query = _context.Articles.Where(a => a.IsPublished).AsQueryable();
         var totalCount = await query.CountAsync();
         var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
 

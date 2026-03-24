@@ -27,12 +27,15 @@ else
         {
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col">
                 <div class="p-6 flex-grow">
-                    <div class="flex items-center gap-2 mb-3">
-                        <a asp-action="ByTag" asp-route-tag="@article.Tag"
-                           class="px-2 py-1 bg-blue-50 text-blue-600 text-xs font-bold uppercase rounded-md tracking-wider hover:bg-blue-100">
-                            @article.Tag
-                        </a>
-                    </div>
+                    @if (!string.IsNullOrWhiteSpace(article.Tag))
+                    {
+                        <div class="flex items-center gap-2 mb-3">
+                            <a asp-action="ByTag" asp-route-tag="@article.Tag"
+                               class="px-2 py-1 bg-blue-50 text-blue-600 text-xs font-bold uppercase rounded-md tracking-wider hover:bg-blue-100">
+                                @article.Tag
+                            </a>
+                        </div>
+                    }
                     <h2 class="text-xl font-bold text-gray-800 mb-3 leading-tight hover:text-blue-600 transition-colors">
                         <a asp-action="Details" asp-route-id="@article.Id">@article.Title</a>
                     </h2>

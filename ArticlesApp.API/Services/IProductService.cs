@@ -26,4 +26,12 @@ public interface IProductService
     /// <returns>A task that represents the asynchronous operation. The task result contains the product if found; otherwise,
     /// null.</returns>
     Task<Product?> GetByIdAsync(int id);
+
+    /// <summary>
+    /// Asynchronously retrieves a paginated list of products based on the specified page number and page size.
+    /// </summary>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    Task<PagedResult<Product>> GetPagedAsync(int page, int pageSize);
 }

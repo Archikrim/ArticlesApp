@@ -19,27 +19,32 @@ public class ProductService(HttpClient httpClient, AppDbContext context) : IProd
     public async Task SyncProductsAsync()
     {
         var products = await _httpClient
-            .GetFromJsonAsync<List<FakeStoreProductDto>>("https://fakestoreapi.com/products");
+        .GetFromJsonAsync<List<FakeStoreProductDto>>("https://fakestoreapi.com/products");
 
         if (products == null) return;
 
-        foreach (var p in products)
-        {
-            if (!_context.Products.Any(x => x.ExternalId == p.Id))
-            {
-                _context.Products.Add(new Product
-                {
-                    ExternalId = p.Id,
-                    Title = p.Title,
-                    Price = p.Price,
-                    Description = p.Description,
-                    Category = p.Category,
-                    Image = p.Image
-                });
-            }
-        }
+        var existingIds = await _context.Products
+            .Select(x => x.ExternalId)
+            .ToListAsync();
 
-        await _context.SaveChangesAsync();
+        var newProducts = products
+            .Where(p => !existingIds.Contains(p.Id))
+            .Select(p => new Product
+            {
+                ExternalId = p.Id,
+                Title = p.Title ?? "No title",
+                Price = p.Price,
+                Description = p.Description,
+                Category = p.Category,
+                Image = p.Image
+            })
+            .ToList();
+
+        if (newProducts.Count != 0)
+        {
+            _context.Products.AddRange(newProducts);
+            await _context.SaveChangesAsync();
+        }
     }
 
     /// <inheritdoc/>
@@ -49,4 +54,28 @@ public class ProductService(HttpClient httpClient, AppDbContext context) : IProd
     /// <inheritdoc/>
     public async Task<Product?> GetByIdAsync(int id)
         => await _context.Products.FindAsync(id);
+
+    /// <inheritdoc/>
+    public async Task<PagedResult<Product>> GetPagedAsync(int page, int pageSize)
+    {
+        if (page < 1) page = 1;
+
+        var query = _context.Products.AsQueryable();
+        var totalCount = await query.CountAsync();
+        var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+        if (page > totalPages)
+            page = totalPages == 0 ? 1 : totalPages;
+
+        var items = await query
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return new PagedResult<Product>
+        {
+            Items = items,
+            TotalCount = totalCount
+        };
+    }
 }
