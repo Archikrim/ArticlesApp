@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37027.9 d17.14
+VisualStudioVersion = 17.14.37027.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticlesApp.API", "ArticlesApp.API\ArticlesApp.API.csproj", "{30A947B4-F4A7-49B2-BBD9-C567FF1652BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticlesApp.Web", "ArticlesApp.Web\ArticlesApp.Web.csproj", "{87A4C700-2F7D-4D50-81FC-7ECAB08233C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticlesApp.Tests", "ArticlesApp.Tests\ArticlesApp.Tests.csproj", "{EC8B4387-7BF3-474D-A415-AC017E921CE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{87A4C700-2F7D-4D50-81FC-7ECAB08233C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87A4C700-2F7D-4D50-81FC-7ECAB08233C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87A4C700-2F7D-4D50-81FC-7ECAB08233C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC8B4387-7BF3-474D-A415-AC017E921CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC8B4387-7BF3-474D-A415-AC017E921CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC8B4387-7BF3-474D-A415-AC017E921CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC8B4387-7BF3-474D-A415-AC017E921CE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
